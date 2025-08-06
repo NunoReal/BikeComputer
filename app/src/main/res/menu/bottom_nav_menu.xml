@@ -1,0 +1,14 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_start"
+        android:icon="@android:drawable/ic_menu_view"
+        android:title="Start" />
+    <item
+        android:id="@+id/nav_training"
+        android:icon="@android:drawable/ic_menu_myplaces"
+        android:title="Trainings" />
+    <item
+        android:id="@+id/nav_kompass"
+        android:icon="@android:drawable/ic_menu_preferences"
+        android:title="Kompass" />
+</menu>
