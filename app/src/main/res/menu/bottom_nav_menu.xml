@@ -8,7 +8,7 @@
         android:icon="@android:drawable/ic_menu_myplaces"
         android:title="Trainings" />
     <item
-        android:id="@+id/nav_kompass"
+        android:id="@+id/nav_compass"
         android:icon="@android:drawable/ic_menu_preferences"
-        android:title="Kompass" />
+        android:title="Compass" />
 </menu>

@@ -39,9 +39,9 @@
         tools:layout="@layout/fragment_training" />
 
     <fragment
-        android:id="@+id/kompassFragment"
-        android:name="com.example.bike_computer.KompassFragment"
-        android:label="@string/kompass_fragment_label"
-        tools:layout="@layout/fragment_kompass" />
+        android:id="@+id/compassFragment"
+        android:name="com.example.bike_computer.CompassFragment"
+        android:label="@string/compass_fragment_label"
+        tools:layout="@layout/fragment_compass" />
 
 </navigation>

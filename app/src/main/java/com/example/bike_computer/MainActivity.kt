@@ -20,9 +20,9 @@ class MainActivity : AppCompatActivity() {
                         .replace(R.id.nav_host_fragment_content_main, SecondFragment()).commit()
                     true
                 }
-                R.id.nav_kompass -> {
+                R.id.nav_compass -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main, KompassFragment()).commit()
+                        .replace(R.id.nav_host_fragment_content_main, CompassFragment()).commit()
                     true
                 }
                 R.id.nav_training -> {
