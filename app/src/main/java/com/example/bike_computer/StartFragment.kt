@@ -5,11 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.navigation.fragment.findNavController
 import com.example.bike_computer.databinding.FragmentStartBinding
 
 
-class SecondFragment : Fragment() {
+class StartFragment : Fragment() {
 
     private var _binding: FragmentStartBinding? = null
 
@@ -28,9 +27,6 @@ class SecondFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.buttonSecond.setOnClickListener {
-            findNavController().navigate(R.id.action_StartFragment_to_LoginFragment)
-        }
     }
 
     override fun onDestroyView() {

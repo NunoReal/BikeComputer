@@ -17,7 +17,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_start -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main, SecondFragment()).commit()
+                        .replace(R.id.nav_host_fragment_content_main, StartFragment()).commit()
                     true
                 }
                 R.id.nav_compass -> {
