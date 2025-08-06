@@ -10,24 +10,36 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        if (savedInstanceState == null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, StartFragment())
+                .commit()
+
+            binding.bottomNavigation.selectedItemId = R.id.nav_start
+        }
+
+
         binding.bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_start -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main, StartFragment()).commit()
+                        .replace(R.id.fragment_container, StartFragment())
+                        .commit()
                     true
                 }
                 R.id.nav_compass -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main, CompassFragment()).commit()
+                        .replace(R.id.fragment_container, CompassFragment())
+                        .commit()
                     true
                 }
                 R.id.nav_training -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.nav_host_fragment_content_main, TrainingFragment()).commit()
+                        .replace(R.id.fragment_container, TrainingFragment())
+                        .commit()
                     true
                 }
 
