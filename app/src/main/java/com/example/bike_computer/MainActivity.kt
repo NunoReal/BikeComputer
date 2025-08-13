@@ -15,7 +15,7 @@ class MainActivity : AppCompatActivity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, StartFragment())
+                .replace(R.id.fragment_container, MapsFragment())
                 .commit()
 
             binding.bottomNavigation.selectedItemId = R.id.nav_start
@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_start -> {
                     supportFragmentManager.beginTransaction()
-                        .replace(R.id.fragment_container, StartFragment())
+                        .replace(R.id.fragment_container, MapsFragment())
                         .commit()
                     true
                 }
