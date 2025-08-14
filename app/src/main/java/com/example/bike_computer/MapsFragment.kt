@@ -1,25 +1,47 @@
 package com.example.bike_computer
 
-import androidx.fragment.app.Fragment
-
+import android.Manifest
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.core.app.ActivityCompat
+import androidx.fragment.app.Fragment
+import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 
 class MapsFragment : Fragment() {
 
-    private val callback = OnMapReadyCallback { googleMap ->
-        val sydney = LatLng(-34.0, 151.0)
-        googleMap.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+    private val callback = OnMapReadyCallback { googleMap: GoogleMap ->
+        try {
+            if (ActivityCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) == PackageManager.PERMISSION_GRANTED
+            ) {
+                googleMap.isMyLocationEnabled = true
+
+                val fusedLocationClient =
+                    LocationServices.getFusedLocationProviderClient(requireContext())
+
+                fusedLocationClient.lastLocation.addOnSuccessListener { location ->
+                    location?.let { loc ->
+                        val currentLatLng = LatLng(loc.latitude, loc.longitude)
+                        googleMap.moveCamera(
+                            CameraUpdateFactory.newLatLngZoom(currentLatLng, 15f)
+                        )
+                    }
+                }
+            } else {
+            }
+        } catch (e: SecurityException) {
+            e.printStackTrace()
+        }
     }
 
     override fun onCreateView(
@@ -32,7 +54,8 @@ class MapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
+        val mapFragment = childFragmentManager
+            .findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
     }
 }
