@@ -14,6 +14,10 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.material.floatingactionbutton.FloatingActionButton
+import android.content.Intent
+import androidx.core.content.ContextCompat
+
 
 class MapsFragment : Fragment() {
 
@@ -54,8 +58,15 @@ class MapsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val mapFragment = childFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment?
+
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
         mapFragment?.getMapAsync(callback)
+
+        view.findViewById<FloatingActionButton>(R.id.floating_action_button).setOnClickListener {
+            val intent = Intent(requireContext(), LocationService::class.java)
+            ContextCompat.startForegroundService(requireContext(), intent)
+        }
     }
+
+
 }
