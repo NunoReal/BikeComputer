@@ -92,7 +92,7 @@
         app:layout_constraintBottom_toBottomOf="parent">
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button1"
+            android:id="@+id/pause_button"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="80dp"
             android:layout_height="80dp"
@@ -108,7 +108,7 @@
         app:shapeAppearanceOverlay="@style/CircularButton" />
 
         <com.google.android.material.button.MaterialButton
-            android:id="@+id/button2"
+            android:id="@+id/stop_button"
             style="@style/Widget.Material3.Button.OutlinedButton"
             android:layout_width="80dp"
             android:layout_height="80dp"
