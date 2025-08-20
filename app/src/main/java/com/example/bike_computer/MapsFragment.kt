@@ -63,6 +63,9 @@ class MapsFragment : Fragment() {
         mapFragment?.getMapAsync(callback)
 
         view.findViewById<FloatingActionButton>(R.id.floating_action_button).setOnClickListener {
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, TrackingDataFragment())
+                .commit()
             val intent = Intent(requireContext(), LocationService::class.java)
             ContextCompat.startForegroundService(requireContext(), intent)
         }
