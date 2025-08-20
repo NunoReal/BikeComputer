@@ -91,25 +91,40 @@
         android:weightSum="2"
         app:layout_constraintBottom_toBottomOf="parent">
 
-        <Button
-            android:id="@+id/btnPause"
-            android:layout_width="0dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button1"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_weight="1"
-            android:backgroundTint="#2196F3"
-            android:text="⏸"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp" />
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text=""
+            app:icon="@drawable/icon_pause"
+            app:iconGravity=""
+            app:iconPadding="0dp"
+            app:iconSize="32dp"
+        app:iconTint="@android:color/white"
+        app:backgroundTint="#2196F3"
+        app:shapeAppearanceOverlay="@style/CircularButton" />
 
-        <Button
-            android:id="@+id/btnStop"
-            android:layout_width="0dp"
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/button2"
+            style="@style/Widget.Material3.Button.OutlinedButton"
+            android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_weight="1"
-            android:backgroundTint="#F44336"
-            android:text="✖"
-            android:textColor="#FFFFFF"
-            android:textSize="30sp" />
+            android:layout_marginStart="16dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:text=""
+            app:icon="@drawable/icon_stop"
+            app:iconGravity=""
+            app:iconPadding="0dp"
+            app:iconSize="32dp"
+
+        app:iconTint="@android:color/white"
+        app:backgroundTint="#F44336"
+        app:shapeAppearanceOverlay="@style/CircularButton" />
+
 
     </LinearLayout>
 
