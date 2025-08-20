@@ -100,10 +100,10 @@
             android:insetBottom="0dp"
             android:text=""
             app:icon="@drawable/icon_pause"
-            app:iconGravity=""
+            app:iconGravity="textTop"
             app:iconPadding="0dp"
             app:iconSize="32dp"
-        app:iconTint="@android:color/white"
+        app:iconTint="#FFFFFF"
         app:backgroundTint="#2196F3"
         app:shapeAppearanceOverlay="@style/CircularButton" />
 
@@ -117,11 +117,11 @@
             android:insetBottom="0dp"
             android:text=""
             app:icon="@drawable/icon_stop"
-            app:iconGravity=""
+            app:iconGravity="textTop"
             app:iconPadding="0dp"
             app:iconSize="32dp"
 
-        app:iconTint="@android:color/white"
+        app:iconTint="#FFFFFF"
         app:backgroundTint="#F44336"
         app:shapeAppearanceOverlay="@style/CircularButton" />
 
