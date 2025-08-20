@@ -6,4 +6,8 @@
     </style>
 
     <style name="Theme.Bike_Computer" parent="Base.Theme.Bike_Computer" />
+    <style name="CircularButton" parent="">
+        <item name="cornerSize">50%</item>
+    </style>
+
 </resources>
