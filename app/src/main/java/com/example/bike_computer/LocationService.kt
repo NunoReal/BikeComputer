@@ -7,6 +7,9 @@ import android.content.pm.PackageManager
 import android.os.IBinder
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
+import com.example.bike_computer.LocationRepository
+import com.example.bike_computer.LocationData
+
 
 class LocationService : Service() {
 
@@ -26,10 +29,14 @@ class LocationService : Service() {
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 for (location in locationResult.locations) {
-                    println("Aktuelle Location: ${location.latitude}, ${location.longitude}")
+                    val locData = LocationData(location.latitude, location.longitude)
+                    LocationViewModelProvider.getInstance().updateLocation(locData)
                 }
             }
         }
+
+
+
 
         if (ActivityCompat.checkSelfPermission(
                 this,
