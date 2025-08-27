@@ -32,6 +32,17 @@ class TrackingDataFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_tracking_data, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val locationViewModel = LocationViewModelProvider.getInstance()
+        locationViewModel.locationData.observe(viewLifecycleOwner) { location ->
+            println("Fragment empfängt Location: ${location.latitude}, ${location.longitude}")
+        }
+
+    }
+
+
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
