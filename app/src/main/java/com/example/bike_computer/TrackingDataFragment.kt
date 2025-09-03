@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.content.Intent
 
 
 private const val ARG_PARAM1 = "param1"
@@ -53,7 +54,17 @@ class TrackingDataFragment : Fragment() {
             latValue.text = location.latitude.toString()
             lonValue.text = location.longitude.toString()
         }
+
+        val stopButton = view.findViewById<View>(R.id.stop_button)
+        stopButton.setOnClickListener {
+            requireContext().stopService(Intent(requireContext(), LocationService::class.java))
+
+            requireActivity().supportFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, MapsFragment())
+                .commit()
+        }
     }
+
 
 
 
