@@ -7,8 +7,6 @@ import android.content.pm.PackageManager
 import android.os.IBinder
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
-import com.example.bike_computer.LocationRepository
-import com.example.bike_computer.LocationData
 
 
 class LocationService : Service() {
