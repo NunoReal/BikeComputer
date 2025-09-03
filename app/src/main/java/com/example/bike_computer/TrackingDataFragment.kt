@@ -8,22 +8,16 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.content.Intent
 import com.google.android.material.button.MaterialButton
+import android.os.SystemClock
+import android.widget.Chronometer
 
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
 
 
 class TrackingDataFragment : Fragment() {
 
-    private var param1: String? = null
-    private var param2: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
     }
 
     override fun onCreateView(
@@ -54,6 +48,11 @@ class TrackingDataFragment : Fragment() {
             latValue.text = location.latitude.toString()
             lonValue.text = location.longitude.toString()
         }
+        val timer = view.findViewById<Chronometer>(R.id.tracking_timer)
+        var pauseOffset: Long = 0L
+
+        timer.base = SystemClock.elapsedRealtime()
+        timer.start()
 
         val pauseButton = view.findViewById<MaterialButton>(R.id.pause_button)
         var isPaused = false
@@ -63,10 +62,18 @@ class TrackingDataFragment : Fragment() {
             if (isPaused) {
                 intent.action = "ACTION_RESUME"
                 requireContext().startService(intent)
+
+                timer.base = SystemClock.elapsedRealtime() - pauseOffset
+                timer.start()
+
                 pauseButton.setIconResource(R.drawable.icon_pause)
             } else {
                 intent.action = "ACTION_PAUSE"
                 requireContext().startService(intent)
+
+                pauseOffset = SystemClock.elapsedRealtime() - timer.base
+                timer.stop()
+
                 pauseButton.setIconResource(R.drawable.icon_play_arrow)
             }
             isPaused = !isPaused
@@ -76,6 +83,11 @@ class TrackingDataFragment : Fragment() {
         stopButton.setOnClickListener {
             requireContext().stopService(Intent(requireContext(), LocationService::class.java))
 
+            timer.stop()
+            timer.base = SystemClock.elapsedRealtime()
+            pauseOffset = 0L
+            isPaused = false
+
             requireActivity().supportFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, MapsFragment())
                 .commit()
@@ -83,16 +95,4 @@ class TrackingDataFragment : Fragment() {
     }
 
 
-
-
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            TrackingDataFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }
