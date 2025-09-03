@@ -13,6 +13,8 @@ class LocationService : Service() {
 
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationCallback: LocationCallback
+    private lateinit var locationRequest: LocationRequest
+    private var isPaused = false
 
     override fun onCreate() {
         super.onCreate()
@@ -26,9 +28,11 @@ class LocationService : Service() {
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
-                for (location in locationResult.locations) {
-                    val locData = LocationData(location.latitude, location.longitude)
-                    LocationViewModelProvider.getInstance().updateLocation(locData)
+                if (!isPaused) {
+                    for (location in locationResult.locations) {
+                        val locData = LocationData(location.latitude, location.longitude)
+                        LocationViewModelProvider.getInstance().updateLocation(locData)
+                    }
                 }
             }
         }
@@ -54,8 +58,20 @@ class LocationService : Service() {
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
+        when (intent?.action) {
+            "ACTION_PAUSE" -> pauseTracking()
+            "ACTION_RESUME" -> resumeTracking()
+        }
+
         startForeground(1, createNotification(this))
         return START_STICKY
+    }
+    private fun pauseTracking() {
+        isPaused = true
+    }
+
+    private fun resumeTracking() {
+        isPaused = false
     }
 
     override fun onDestroy() {
