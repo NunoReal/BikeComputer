@@ -7,6 +7,7 @@ import android.content.pm.PackageManager
 import android.os.IBinder
 import androidx.core.app.ActivityCompat
 import com.google.android.gms.location.*
+import android.util.Log
 
 
 class LocationService : Service() {
@@ -16,21 +17,31 @@ class LocationService : Service() {
     private lateinit var locationRequest: LocationRequest
     private var isPaused = false
 
+    private var altitudeManager: AltitudeManager? = null
+
+
     override fun onCreate() {
         super.onCreate()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
 
-        val locationRequest = LocationRequest.Builder(
+        locationRequest = LocationRequest.Builder(
             Priority.PRIORITY_HIGH_ACCURACY,
             5000
         ).build()
+
+        Log.d("AltitudeManager", "Hat Barometer: ${altitudeManager?.hasSensor()}")
+
 
         locationCallback = object : LocationCallback() {
             override fun onLocationResult(locationResult: LocationResult) {
                 if (!isPaused) {
                     for (location in locationResult.locations) {
-                        val locData = LocationData(location.latitude, location.longitude)
+                        val locData = LocationData(
+                            location.latitude,
+                            location.longitude,
+                            if (location.hasAltitude()) location.altitude else null
+                        )
                         LocationViewModelProvider.getInstance().updateLocation(locData)
                     }
                 }
@@ -55,6 +66,11 @@ class LocationService : Service() {
             locationCallback,
             mainLooper
         )
+        altitudeManager = AltitudeManager(applicationContext) { altMeters ->
+            if (!isPaused) {
+                LocationViewModelProvider.getInstance().updateAltitude(altMeters)
+            }
+        }.also { it.start() }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -68,15 +84,18 @@ class LocationService : Service() {
     }
     private fun pauseTracking() {
         isPaused = true
+        altitudeManager?.stop()
     }
 
     private fun resumeTracking() {
         isPaused = false
+        altitudeManager?.start()
     }
 
     override fun onDestroy() {
         super.onDestroy()
         fusedLocationClient.removeLocationUpdates(locationCallback)
+        altitudeManager?.stop()
     }
 
     override fun onBind(intent: Intent?): IBinder? = null
