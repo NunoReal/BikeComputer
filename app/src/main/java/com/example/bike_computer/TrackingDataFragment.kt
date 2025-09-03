@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 
 
 private const val ARG_PARAM1 = "param1"
@@ -35,12 +36,25 @@ class TrackingDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val latitudeCard = view.findViewById<View>(R.id.card_latitude)
+        val longitudeCard = view.findViewById<View>(R.id.card_longitude)
+
+        val latTitle = latitudeCard.findViewById<TextView>(R.id.card_title)
+        val latValue = latitudeCard.findViewById<TextView>(R.id.card_value)
+
+        val lonTitle = longitudeCard.findViewById<TextView>(R.id.card_title)
+        val lonValue = longitudeCard.findViewById<TextView>(R.id.card_value)
+
+        latTitle.text = "Latitude"
+        lonTitle.text = "Longitude"
+
         val locationViewModel = LocationViewModelProvider.getInstance()
         locationViewModel.locationData.observe(viewLifecycleOwner) { location ->
-            println("Fragment empfängt Location: ${location.latitude}, ${location.longitude}")
+            latValue.text = location.latitude.toString()
+            lonValue.text = location.longitude.toString()
         }
-
     }
+
 
 
     companion object {
