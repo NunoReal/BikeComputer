@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import android.content.Intent
-
+import com.google.android.material.button.MaterialButton
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -53,6 +53,23 @@ class TrackingDataFragment : Fragment() {
         locationViewModel.locationData.observe(viewLifecycleOwner) { location ->
             latValue.text = location.latitude.toString()
             lonValue.text = location.longitude.toString()
+        }
+
+        val pauseButton = view.findViewById<MaterialButton>(R.id.pause_button)
+        var isPaused = false
+
+        pauseButton.setOnClickListener {
+            val intent = Intent(requireContext(), LocationService::class.java)
+            if (isPaused) {
+                intent.action = "ACTION_RESUME"
+                requireContext().startService(intent)
+                pauseButton.setIconResource(R.drawable.icon_pause)
+            } else {
+                intent.action = "ACTION_PAUSE"
+                requireContext().startService(intent)
+                pauseButton.setIconResource(R.drawable.icon_play_arrow)
+            }
+            isPaused = !isPaused
         }
 
         val stopButton = view.findViewById<View>(R.id.stop_button)
