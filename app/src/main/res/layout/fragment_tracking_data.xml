@@ -68,18 +68,21 @@
             android:weightSum="2">
 
             <include
+                android:id="@+id/card_latitude"
                 layout="@layout/card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
             <include
+                android:id="@+id/card_longitude"
                 layout="@layout/card"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1" />
 
         </LinearLayout>
+
 
     </LinearLayout>
 
