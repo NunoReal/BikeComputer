@@ -31,23 +31,47 @@ class TrackingDataFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        val altitudeCard = view.findViewById<View>(R.id.card_altitude)
+        val elevationCard = view.findViewById<View>(R.id.card_elevation_gain)
+
+        val altTitle = altitudeCard.findViewById<TextView>(R.id.card_title)
+        val altValue = altitudeCard.findViewById<TextView>(R.id.card_value)
+
+        val elevTitle = elevationCard.findViewById<TextView>(R.id.card_title)
+        val elevValue = elevationCard.findViewById<TextView>(R.id.card_value)
+
+        altTitle.text = "Aktuelle Höhe"
+        elevTitle.text = "Höhenmeter"
+
         val latitudeCard = view.findViewById<View>(R.id.card_latitude)
         val longitudeCard = view.findViewById<View>(R.id.card_longitude)
-
         val latTitle = latitudeCard.findViewById<TextView>(R.id.card_title)
         val latValue = latitudeCard.findViewById<TextView>(R.id.card_value)
-
         val lonTitle = longitudeCard.findViewById<TextView>(R.id.card_title)
         val lonValue = longitudeCard.findViewById<TextView>(R.id.card_value)
-
         latTitle.text = "Latitude"
         lonTitle.text = "Longitude"
 
         val locationViewModel = LocationViewModelProvider.getInstance()
+
+        locationViewModel.altitude.observe(viewLifecycleOwner) { h ->
+            altValue.text = if (h != null) {
+                String.format("%.1f m", h)
+            } else {
+                "--"
+            }
+        }
+
+        locationViewModel.elevationGain.observe(viewLifecycleOwner) { gain ->
+            elevValue.text = String.format("%.1f m", gain)
+        }
+
         locationViewModel.locationData.observe(viewLifecycleOwner) { location ->
             latValue.text = location.latitude.toString()
             lonValue.text = location.longitude.toString()
         }
+
+
         val timer = view.findViewById<Chronometer>(R.id.tracking_timer)
         var pauseOffset: Long = 0L
 
